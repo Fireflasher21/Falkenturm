@@ -1,0 +1,94 @@
+name: Falkenturm
+main: me.Fireflasher.main
+version: 1.0
+api-version: 1.16
+depend: [WorldGuard]
+
+commands:
+  Falkenturm:
+    usage: /Falkenturm
+    description: Plugininfo
+    default: true
+    permission: Falkenturm
+  Version:
+    usage: /Falkenturm version
+    description: Plugin Version
+    default: true
+  KT help:
+    usage: /Falkenturm help
+    description: Zeig aktive Befehle
+    default: true
+    permission: Falkenturm.help
+  KT Info:
+    usage: /Falkenturm info
+    description: Gibt Info über Plugin
+    default: true
+    permission: Falkenturm.help
+  KT Reload:
+    usage: /Falkenturm reload
+    description: Reloaded die Plugin Configs
+    default: false
+    permission: Falkenturm.reload
+
+  Briefkasten:
+    usage: /Briefkasten
+    description: Befehlinfo
+    default: true
+    permission: Briefkasten
+    aliases:
+      - bk
+      - Bk
+      - BK
+    BK Help:
+      usage: /Briefkasten help
+      description: Info über Befehle
+      default: true
+      permission: Briefkasten.help
+    BK Sub Help:
+      usage: /Briefkasten help [add|delete|verify|send]
+      description: Info über einzelnen Befehle
+    BK Add:
+      usage: /Briefkasten add
+      description: Fügt eine Kiste als Briefkasten hinzu
+      default: true
+      permission: Briefkasten.add
+    BK Delete:
+      usage: /Briefkasten delete verify
+      description: Löscht den momentan zugewiesenen Briefkasten
+      permission: Briefkasten.delete
+    BK Delete Verify:
+      usage: /Briefkasten delete verify
+      description: Rückfrage
+    BK Verify:
+      usage: /Briefkasten verify
+      description: Teile der Poststelle deinen Standort mit
+      permission: Briefkasten.verify
+    BK Send:
+      usage: /Briefkasten send [Player]
+      description: Sendet einen Brief an einen Spieler
+      permission: Briefkasten.send
+
+permissions:
+  Falkenturm.*:
+    description: Zugriff auf alle Befehle
+    children:
+      Falkenturm: true
+      Falkenturm.help: true
+      Falkenturm.version: true
+      Falkenturm.info: true
+      Falkenturm.reload: true
+
+  Briefkasten.*:
+    description: Zugriff auf Briefkasten Befehle
+    children:
+      Briefasten: true
+      Briefkasten.help: true
+      Briefkasten.add: true
+      Briefkasten.delete: true
+      Briefkasten.verify: true
+      Briefkasten.send: true
+    Briefkasten.add:
+      descritption: For working
+      Briefkasten.delete: true
+      Briefkasten.verify: true
+      Briefkasten.send: true

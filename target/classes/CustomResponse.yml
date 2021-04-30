@@ -1,0 +1,45 @@
+# Wähle deine Antworten
+Response:
+  Messages:
+    Help:
+      add: '&4[Falkenturm]&r Damit kannst du eine Kiste auswählen welche ab sofort
+        deinen Briefkasten darstellt'
+      verify_add: '&4[Falkenturm]&r Damit die ausgewählte Kiste gespeichert wird musst
+        du sie in der Poststelle mit &9/Briefkasten &averify&r registrieren um Briefe
+        zu bekommen'
+      delete: '&4[Falkenturm]&r Damit kannst du deinen bisherigen Briefkasten aus
+        der Config löschen um einen neuen hinzufügen'
+      verify: '&4[Falkenturm]&r Mit diesem Befehl meldest du der Postelle deinen Briefkasten
+        und speicherst Ihn in der Config. Dazu musst du in der Poststelle stehen'
+      verify_blocked: '&4[Falkenturm]&r Diese Funktion wurde deaktiviert'
+      send: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler
+        senden welcher einen Briefkasten besitzt'
+      send_verify: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen
+        Spieler senden welcher einen Briefkasten besitzt und du in der Poststelle
+        bist'
+      default: '&4[Falkenturm]&r Benutze bitte einen gültigen Befehl von &9/Briefkasten
+        &ahelp'
+    No_Permission:
+      help: '&4Du hast keine Berechtigung für den Command &ahelp'
+      add: '&4Du hast keine Berechtigung für den Command &aadd'
+      delete: '&4Du hast keine Berechtigung für den Command &adelete'
+      verify: '&4Du hast keine Berechtigung für den Command &averify'
+      send: '&4Du hast keine Berechtigung für den Command &asend'
+      default: '&4Du hast keine Berechtigung für diesen Command'
+    Ausgabe:
+      add: '&4[Falkenturm]&r Bitte wähle deinen Briefkasten'
+      delete: '&4[Falkenturm]&r Bitte wähle den Briefkasten zum löschen'
+      #Wenn man Erfolgreich die Kiste registriert hat
+      verify_true: '&4[Falkenturm]&r Die Poststelle hat deinen Briefkasten nun registriert'
+      #Wenn man sich nicht in der Zone befindet
+      verify_false: '&4[Falkenturm]&r Bitte finde dich in der Poststelle ein um deinen
+        Briefkasten anzumelden'
+      #Wenn man Erfolgreich einen Brief abgesendet hat
+      send_true: '&4[Falkenturm]&r Dein Brief wurde an den Briefkasten der Person
+        zugestellt'
+      #Wenn man sich nicht in der Zone befindet
+      send_false: '&4[Falkenturm]&r Du musst dich in der Poststelle befinden um den
+        Brief abzusenden'
+
+
+
