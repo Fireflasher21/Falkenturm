@@ -1,6 +1,10 @@
 package me.Fireflasher;
 
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
+import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import me.Fireflasher.Commands.FalkenturmCommandExecuter;
 import me.Fireflasher.Commands.LetterChestCommandExecuter;
 import me.Fireflasher.Configs.DefaultConfig;
@@ -16,7 +20,7 @@ import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
 
-    public static StateFlag POSTSTELLE;
+    public static Flag POSTSTELLE;
     public DefaultConfig defaultConfig;
     public ResponseConfig responseConfig;
     private static Main instance;
@@ -41,7 +45,11 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Events(instance), instance);
         this.saveDefaultConfig();
 
-    /*
+        getLogger().info("Falkenturm ist aktiv");
+    }
+
+    @Override
+    public void onLoad(){
         FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
         try {
             // create a flag with the name "poststelle", defaulting to false
@@ -51,7 +59,7 @@ public class Main extends JavaPlugin {
         } catch (FlagConflictException e) {
             // some other plugin registered a flag by the same name already.
             // you can use the existing flag, but this may cause conflicts - be sure to check type
-            Flag<?> existing = registry.get("poststellle");
+            Flag<?> existing = registry.get("poststelle");
             if (existing instanceof StateFlag) {
                 POSTSTELLE = (StateFlag) existing;
             } else {
@@ -59,10 +67,6 @@ public class Main extends JavaPlugin {
                 // hopefully this never actually happens
             }
         }
-
-     */
-
-        getLogger().info("Falkenturm ist aktiv");
     }
 
     @Override

@@ -116,7 +116,7 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
         if (sender.hasPermission("Falkenturm.reload")) {
             sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.GREEN + "Wurde erfolgreich reloaded");
             new DefaultConfig().reloadConfig();
-            new ResponseConfig();
+            new ResponseConfig().reloadConfig();
             new PlayerInformation().loadConfig();
 
             return true;

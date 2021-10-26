@@ -1,8 +1,13 @@
 package me.Fireflasher.Commands;
 
-import me.Fireflasher.Configs.*;
-import me.Fireflasher.HashMaps.*;
+import me.Fireflasher.Configs.DefaultConfig;
+import me.Fireflasher.Configs.PlayerInformation;
+import me.Fireflasher.Configs.ResponseConfig;
+import me.Fireflasher.HashMaps.AddTimer;
+import me.Fireflasher.HashMaps.ChestLocation;
+import me.Fireflasher.HashMaps.DeleteTimer;
 import me.Fireflasher.Main;
+import me.Fireflasher.WorldguardIntegration.Flagaccess;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -288,22 +293,19 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
     private boolean command_verify(Player player) throws IOException, InvalidConfigurationException {
         this.player = player;
-        String verify_true = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.verify_true");
         String verify_false = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.verify_false");
 
         if(player.hasPermission("Briefkasten.verify")) {
             if (verify) {
-                /*
-                if (Flagaccess.inRegion(player)) {
 
+                if (Flagaccess.inRegion(player)) {
                     if (ChestLocation.getInstance().getTime(player)) {
                         new PlayerInformation().setChestLocation(player, ChestLocation.getInstance().getLocation(player));
-                        return ResponseConfig.nullExecuter(player, verify_true);
+                        return true;
                     }
                 } else {
                     return ResponseConfig.nullExecuter(player, verify_false);
                 }
-               */
                 return true;
             }//Configabfrage ob Regionprotect aktiv oder nicht
             else {
@@ -434,16 +436,14 @@ public class LetterChestCommandExecuter implements CommandExecutor {
                 }
             }
             if (verify) {
-/*              if (Flagaccess.inRegion(player)) {
+              if (Flagaccess.inRegion(player)) {
                     player.getInventory().remove(brief_sender);
-                    brief_sender.setItemMeta(brief_meta);
+                    brief_sender.setItemMeta(brief_e_meta);
                     chest_inventory.getInventory().addItem(brief_sender);
-                    System.out.println("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
+                    Main.getInstance().getLogger().info("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
                     return ResponseConfig.nullExecuter(player, send_true);
                 }//end Worldregiontest verify
-                else{
-             */     return ResponseConfig.nullExecuter(player, send_false);
-                //}
+                else return ResponseConfig.nullExecuter(player, send_false);
             }//end Configabfrage ob Regionprotect aktiv oder nicht
             else {
                 player.getInventory().remove(brief_sender);

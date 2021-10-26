@@ -6,8 +6,12 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import me.Fireflasher.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -38,19 +42,17 @@ public class Flagaccess extends JavaPlugin {
                 ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(vector3.toBlockPoint());
 
 
-/*
-                Flag poststelle = true;
+                Flag flag = null;
+                StateFlag.State allow = StateFlag.State.ALLOW;
 
-                if (WorldGuard.getInstance().getPlatform().getRegionContainer().get().getApplicableRegions().getRegions().)
-                for(ProtectedRegion regions : applicableRegionSet){
-                        if ( regions.contains(vector3.toBlockPoint())){
-                                if (regions.a){
+                //if (WorldGuard.getInstance().getPlatform().getRegionContainer().get((World) player.getWorld()).getApplicableRegions()) {
+                        for (ProtectedRegion regions : applicableRegionSet) {
+                                if (regions.getFlag(Main.POSTSTELLE).equals(allow)) {
                                         return true;
                                 }
+
                         }
-                }
-                return false;
-                */
+                //}
                 return false;
         }
 
