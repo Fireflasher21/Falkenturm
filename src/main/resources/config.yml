@@ -1,6 +1,6 @@
 Falkenturm:
 #Ob Worldguard Region zum Registrieren und senden von Briefen benutzt werden soll
-  verify: true
+  verify: false
 
   Chest:
     #Sollen die Kistendateien von Spielern gelöscht werden Default:false

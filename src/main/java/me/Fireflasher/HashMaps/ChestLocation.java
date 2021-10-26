@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class ChestLocation {
 
-    private final boolean verify = DefaultConfig.getConfig().getBoolean("Falkenturm.verify");
+    private final boolean verify = new DefaultConfig().getConfig().getBoolean("Falkenturm.verify");
 
     private static ChestLocation chestLocation;
     private final HashMap<Player, Location> maplocation;
@@ -36,7 +36,7 @@ public class ChestLocation {
 
     public void setLocation(Player player, Location location) throws InterruptedException, IOException, InvalidConfigurationException {
         chestLocation.maplocation.put(player, location);
-        if( DefaultConfig.getConfig().getBoolean("Falkenturm.verify")) {
+        if( new DefaultConfig().getConfig().getBoolean("Falkenturm.verify")) {
 
             if (player.hasPermission("Briefkasten.verify")) {
 

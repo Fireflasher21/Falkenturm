@@ -1,11 +1,8 @@
 package me.Fireflasher.Commands;
 
-import me.Fireflasher.Configs.DefaultConfig;
-import me.Fireflasher.Configs.PlayerInformation;
-import me.Fireflasher.Configs.ResponseConfig;
-import me.Fireflasher.HashMaps.AddTimer;
-import me.Fireflasher.HashMaps.ChestLocation;
-import me.Fireflasher.HashMaps.DeleteTimer;
+import me.Fireflasher.Configs.*;
+import me.Fireflasher.HashMaps.*;
+import me.Fireflasher.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,20 +26,20 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
     private Player player;
     //config
-    private final boolean verify = DefaultConfig.getConfig().getBoolean("Falkenturm.verify");
-    private final String perm_help = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.help");
-    private final String perm_add = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.add");
-    private final String perm_delete = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.delete");
-    private final String perm_verify = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.verify");
-    private final String perm_send = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.send");
-    private final String perm_default = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.default");
-    private final String verify_blocked = ResponseConfig.getConfig().getString("Response.Messages.Help.verify_blocked");
+    private final boolean verify = new DefaultConfig().getConfig().getBoolean("Falkenturm.verify");
+    private final String perm_help = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.help");
+    private final String perm_add = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.add");
+    private final String perm_delete = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.delete");
+    private final String perm_verify = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.verify");
+    private final String perm_send = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.send");
+    private final String perm_default = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.default");
+    private final String verify_blocked = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_blocked");
 
     public LetterChestCommandExecuter() {}
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        String default_string = ResponseConfig.getConfig().getString("Response.Messages.Help.default");
+        String default_string = new ResponseConfig().getConfig().getString("Response.Messages.Help.default");
         //Commandreihe
         if (cmd.getName().equalsIgnoreCase("Briefkasten") ) {
 
@@ -89,7 +86,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
                                 return command_help(player, args[1]);
                             }
                             else if(args[0].equals("delete")){
-                                String add_nopending = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.add_nopending");
+                                String add_nopending = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.add_nopending");
                                 if(args[1].equals("verify")) {
                                     if (DeleteTimer.getInstance().getCommand(player)) {
                                         try {
@@ -111,7 +108,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
                                     }
                                 }
                                 else{
-                                    String help_default = ResponseConfig.getConfig().getString("Response.Messages.Help.default");
+                                    String help_default = new ResponseConfig().getConfig().getString("Response.Messages.Help.default");
                                     return ResponseConfig.nullExecuter(player,help_default);
                                     }
                             }
@@ -137,7 +134,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
             }//Ausführung durch User
             else {
-                String onlyplayer = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.onlyplayer");
+                String onlyplayer = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.onlyplayer");
                 return ResponseConfig.nullExecuter(player, onlyplayer);
             }
 
@@ -152,7 +149,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
 
             player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Briefkasten " + ChatColor.GREEN + "help");
-            System.out.println("[Falkenturm] /Briefkasten help");
+            Main.getInstance().getLogger().info("[Falkenturm] /Briefkasten help");
             if (player.hasPermission("Briefkasten.add")) {
                 player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Briefkasten " + ChatColor.GREEN + "add");
             }
@@ -177,13 +174,13 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
     private boolean command_help(Player player, String command) {
         this.player = player;
-        String help_add = ResponseConfig.getConfig().getString("Response.Messages.Help.add");
-        String help_verify_add = ResponseConfig.getConfig().getString("Response.Messages.Help.verify_add");
-        String help_delete = ResponseConfig.getConfig().getString("Response.Messages.Help.delete");
-        String help_verify = ResponseConfig.getConfig().getString("Response.Messages.Help.verify");
-        String help_verify_send = ResponseConfig.getConfig().getString("Response.Messages.Help.verify_send");
-        String help_send = ResponseConfig.getConfig().getString("Response.Messages.Help.send");
-        String help_default = ResponseConfig.getConfig().getString("Response.Messages.Help.default");
+        String help_add = new ResponseConfig().getConfig().getString("Response.Messages.Help.add");
+        String help_verify_add = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_add");
+        String help_delete = new ResponseConfig().getConfig().getString("Response.Messages.Help.delete");
+        String help_verify = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify");
+        String help_verify_send = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_send");
+        String help_send = new ResponseConfig().getConfig().getString("Response.Messages.Help.send");
+        String help_default = new ResponseConfig().getConfig().getString("Response.Messages.Help.default");
 
         switch (command) {
             case "add" -> {
@@ -243,15 +240,15 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
     private boolean command_add(Player player) throws IOException, InvalidConfigurationException, InterruptedException {
         this.player = player;
-        String add = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.add");
-        String add_false = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.add_false");
-        String add_pending = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.add_pending");
+        String add = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.add");
+        String add_false = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.add_false");
+        String add_pending = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.add_pending");
 
         if (player.hasPermission("Briefkasten.add")) {
             if (AddTimer.getInstance().getnull(player)) {
                 if(!ChestLocation.getInstance().getTime(player)) {
                     AddTimer.getInstance().setTime(player);
-                    String nullexecuter = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.null");
+                    String nullexecuter = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.null");
                     if (new PlayerInformation(player).getConfig(player).getBoolean("Event.Chest.set")) {
                         AddTimer.getInstance().delTime(player);
                         return ResponseConfig.nullExecuter(player, add_false);
@@ -269,7 +266,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
     private boolean command_delete(Player player) throws IOException, InvalidConfigurationException, InterruptedException {
         this.player = player;
-        String delete_verify1 = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.delete_verify1");
+        String delete_verify1 = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.delete_verify1");
 
         if (player.hasPermission("Briefkasten.delete")) {
             if(!new PlayerInformation().getConfig(player).getBoolean("Event.Chest.set")){
@@ -291,8 +288,8 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
     private boolean command_verify(Player player) throws IOException, InvalidConfigurationException {
         this.player = player;
-        String verify_true = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.verify_true");
-        String verify_false = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.verify_false");
+        String verify_true = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.verify_true");
+        String verify_false = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.verify_false");
 
         if(player.hasPermission("Briefkasten.verify")) {
             if (verify) {
@@ -319,7 +316,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
     }//end private method command_verify
 
     private boolean command_send(Player player){
-        String send_false_np = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_false_np");
+        String send_false_np = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_false_np");
         this.player = player;
         if(player.hasPermission("Briefkasten.send")) {
                 return ResponseConfig.nullExecuter(player, send_false_np);
@@ -330,8 +327,8 @@ public class LetterChestCommandExecuter implements CommandExecutor {
     }
 
     private boolean command_send(Player player, String playerstring, int online) throws IOException, InvalidConfigurationException, InterruptedException {
-        String send_false_pl = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_false_pl");
-        String send_no_chest = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_no_chest");
+        String send_false_pl = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_false_pl");
+        String send_no_chest = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_no_chest");
 
 
 
@@ -366,7 +363,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
             }
             if(setChest){
                 if(chest_exist){
-                    if(!DefaultConfig.getConfig().getBoolean("Falkenturm.Letter.to_worlds")) {
+                    if(!new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.to_worlds")) {
                         if(new PlayerInformation().getChestLocation(Bukkit.getOfflinePlayer(playerstring).getUniqueId().toString()).getWorld() != player.getWorld()){
                             player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Der Briefkasten ist außer Reichweite");
                             return true;
@@ -396,10 +393,11 @@ public class LetterChestCommandExecuter implements CommandExecutor {
     }//end private method command_send
 
     private boolean send_brief(Player player, String playerstring) throws IOException, InvalidConfigurationException {
-        String send_true = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_true");
-        String send_false = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_false");
-        String send_chest_space = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_chest_space");
-        String send_no_book = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.send_no_book");
+        String send_true = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_true");
+        String send_false = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_false");
+        String send_chest_space = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_chest_space");
+        String send_no_book = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_no_book");
+        String send_empty_book = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.send_empty_book");
 
         int brief = 0;
         if (player.getInventory().getItemInMainHand().getType().equals(Material.WRITTEN_BOOK))  brief = 1;
@@ -414,21 +412,22 @@ public class LetterChestCommandExecuter implements CommandExecutor {
             ItemStack brief_sender = player.getInventory().getItemInMainHand();
             BookMeta brief_e_meta = (BookMeta) brief_sender.getItemMeta();
             if (brief == 1){
-                if (DefaultConfig.getConfig().getBoolean("Falkenturm.Letter.change_author")) {
+                if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.change_author")) {
                     brief_e_meta.setAuthor("???");
                 }
             }
             else if (brief == 2){
-                if (DefaultConfig.getConfig().getBoolean("Falkenturm.Letter.close")){
+                if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.close")){
                     List<String> pages = brief_e_meta.getPages();
                     if ( pages.isEmpty() ){
-                        player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + " Du kannst keinen leeren Brief versenden");
-                        return true;
+                        return ResponseConfig.nullExecuter(player, send_empty_book);
                     }
                     brief_sender.setType(Material.WRITTEN_BOOK);
                     brief_e_meta.setPages(pages);
-                    brief_e_meta.setTitle("Brief");
-                    if (DefaultConfig.getConfig().getBoolean("Falkenturm.Letter.change_author")) {
+                    if(brief_e_meta.getTitle() == null || brief_e_meta.getTitle().isEmpty()){
+                        brief_e_meta.setTitle("Brief");
+                    }
+                    if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.change_author")) {
                         brief_e_meta.setAuthor("???");
                     }
                     else brief_e_meta.setAuthor(player.getName());
@@ -450,7 +449,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
                 player.getInventory().remove(brief_sender);
                 brief_sender.setItemMeta(brief_e_meta);
                 chest_inventory.getInventory().addItem(brief_sender);
-                System.out.println("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
+                Main.getInstance().getLogger().info("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
                 return ResponseConfig.nullExecuter(player, send_true);
             }
         }

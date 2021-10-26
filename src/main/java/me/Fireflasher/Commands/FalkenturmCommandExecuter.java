@@ -17,8 +17,8 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
     public FalkenturmCommandExecuter() {}
 
     //Config
-    private final String perm_help = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.help");
-    private final String perm_default = ResponseConfig.getConfig().getString("Response.Messages.No_Permission.default");
+    private final String perm_help = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.help");
+    private final String perm_default = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.default");
 
     @Override
     public boolean onCommand (CommandSender sender, Command cmd, String label, String[] args) {
@@ -115,8 +115,8 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
     private boolean command_reload(CommandSender sender) throws IOException, InvalidConfigurationException {
         if (sender.hasPermission("Falkenturm.reload")) {
             sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.GREEN + "Wurde erfolgreich reloaded");
-            DefaultConfig.setup();
-            ResponseConfig.setup();
+            new DefaultConfig().reloadConfig();
+            new ResponseConfig();
             new PlayerInformation().loadConfig();
 
             return true;

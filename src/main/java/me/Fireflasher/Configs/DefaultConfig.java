@@ -1,38 +1,94 @@
 package me.Fireflasher.Configs;
 
+import me.Fireflasher.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
 
 public class DefaultConfig {
 
 
-    private static final File ConfigFile = new File("plugins/Falkenturm","config.yml");
+    private Main plugin;
+    private File ConfigFile = null;
+    private FileConfiguration Config = null;
     //private static File ConfigFile = new File(Bukkit.getServer().getPluginManager().getPlugin("Falkenturm").getDataFolder("plugin.yml"), "config.yml");
-    private static FileConfiguration Config = YamlConfiguration.loadConfiguration(ConfigFile);
 
-    public static void setup() throws IOException, InvalidConfigurationException {
-        if(ConfigFile.exists()){
-            Config = YamlConfiguration.loadConfiguration(ConfigFile);
-            System.out.println("[Falkenturm] Defaultconfig erfolgreich geladen");
+    public DefaultConfig() {
+        this.plugin = Main.getInstance();
+        saveDefaults();
+    }
+
+    public void reloadConfig() {
+        if (this.ConfigFile == null) {
+            this.ConfigFile = new File(this.plugin.getDataFolder(), "config.yml");
         }
-        else {
-                loadConfig();
-                if(ConfigFile.exists()) {
-                    Config = YamlConfiguration.loadConfiguration(ConfigFile);
-                    System.out.println("[Falkenturm] Defaultconfig erfolgreich geladen");
-                }
-                else {
-                    System.out.println("[Falkenturm] Defaultconfig nicht geladen");
-                }
-                System.out.println("[Falkenturm] Defaultconfig nicht erstellt");
+        this.Config = YamlConfiguration.loadConfiguration(this.ConfigFile);
+
+        InputStream defaulStream = this.plugin.getResource("config.yml");
+        if (defaulStream != null) {
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaulStream));
+            this.Config.setDefaults(defaultConfig);
         }
     }
 
-    public static void loadConfig() throws IOException, InvalidConfigurationException {
+    public FileConfiguration getConfig() {
+        if (this.Config == null) {
+            reloadConfig();
+        }
+        return this.Config;
+    }
+
+    public void saveConfig() throws IOException {
+        if (this.Config == null || this.ConfigFile == null) {
+            return;
+        }
+        try {
+            this.getConfig().save(this.ConfigFile);
+        } catch (IOException ioe) {
+            plugin.getLogger().log(Level.SEVERE, "ResponseConfig konnte nicht geladen werden" + this.ConfigFile, ioe);
+        }
+    }
+
+    public void saveDefaults() {
+        if (this.ConfigFile == null) {
+            this.ConfigFile = new File(this.plugin.getDataFolder(), "config.yml");
+        }
+        if (!this.ConfigFile.exists()) {
+            this.plugin.saveResource("config.yml", false);
+        }
+    }
+
+    public void setup(Main plugin) throws IOException, InvalidConfigurationException {
+        if (ConfigFile.exists()) {
+            Config = YamlConfiguration.loadConfiguration(ConfigFile);
+            System.out.println("[Falkenturm] Defaultconfig erfolgreich geladen");
+        } else {
+            ConfigFile = new File(plugin.getDataFolder(), "config.yml");
+            Config = YamlConfiguration.loadConfiguration(ConfigFile);
+
+            InputStream defaultstream = plugin.getResource("config.yml");
+            if (defaultstream != null) {
+                YamlConfiguration conf = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultstream));
+                Config.setDefaults(conf);
+            }
+            saveConfig();
+            if (ConfigFile.exists()) {
+                Config = YamlConfiguration.loadConfiguration(ConfigFile);
+                System.out.println("[Falkenturm] Defaultconfig erfolgreich geladen");
+            } else {
+                System.out.println("[Falkenturm] Defaultconfig nicht geladen");
+            }
+            System.out.println("[Falkenturm] Defaultconfig nicht erstellt");
+        }
+    }
+
+    public void loadConfig() throws IOException, InvalidConfigurationException {
         getConfig().options().header("DefaultConfig");
         /*
         getConfig().addDefault("Falkenturm.verify", false);
@@ -45,15 +101,7 @@ public class DefaultConfig {
         getConfig().addDefault("Falkenturm.Letter.change_author", false);
 
         getConfig().options().copyDefaults(true);
-        save();
+        saveConfig();
         getConfig().load(ConfigFile);
-    }
-
-    public static void save() throws IOException{
-        getConfig().save(ConfigFile);
-    }
-
-    public static FileConfiguration getConfig(){
-        return Config;
     }
 }

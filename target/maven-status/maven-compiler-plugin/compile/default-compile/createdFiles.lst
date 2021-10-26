@@ -1,5 +1,4 @@
 me\Fireflasher\Configs\PlayerInformation.class
-me\Fireflasher\main.class
 me\Fireflasher\Commands\LetterChestCommandExecuter.class
 me\Fireflasher\HashMaps\AddTimer.class
 me\Fireflasher\Events.class
@@ -9,3 +8,4 @@ me\Fireflasher\Configs\DefaultConfig.class
 me\Fireflasher\Commands\FalkenturmCommandExecuter.class
 me\Fireflasher\WorldguardIntegration\Flagaccess.class
 me\Fireflasher\Configs\ResponseConfig.class
+me\Fireflasher\Main.class

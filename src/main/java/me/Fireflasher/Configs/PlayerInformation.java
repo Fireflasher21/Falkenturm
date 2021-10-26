@@ -2,6 +2,7 @@ package me.Fireflasher.Configs;
 
 import me.Fireflasher.HashMaps.AddTimer;
 import me.Fireflasher.HashMaps.DeleteTimer;
+import me.Fireflasher.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -22,7 +23,8 @@ public class PlayerInformation {
     private File ConfigFile;
     private FileConfiguration Config;
 
-    public PlayerInformation(){}
+    public PlayerInformation(){
+    }
 
     public PlayerInformation(Player player) throws IOException, InvalidConfigurationException {
         this.player = player;
@@ -33,7 +35,7 @@ public class PlayerInformation {
             Config.options().header("Spielerspezifische Daten");
             Config.options().copyDefaults(true);
             save(player);
-            System.out.println("[Falkenturm] Config erfolgreich erstellt für" + player.getName());
+            Main.getInstance().getLogger().info("[Falkenturm] Config erfolgreich erstellt für " + player.getName());
         }
         Config.load(ConfigFile);
     }
@@ -52,7 +54,7 @@ public class PlayerInformation {
     public void loadConfig() throws IOException, InvalidConfigurationException {
         File[] file = new File("plugins/Falkenturm/Player").listFiles();
         if (file == null) {
-            System.out.println("[Falkenturm] Es existieren noch keine Playerdateien");
+            Main.getInstance().getLogger().info("[Falkenturm] Es existieren noch keine Playerdateien");
         }
         else {
             for (File value : file) {
@@ -65,12 +67,12 @@ public class PlayerInformation {
                 else {
                     Config = new PlayerInformation(player_id).Config;
 
-                    if (DefaultConfig.getConfig().getBoolean("Falkenturm.Chest.delete")) {
+                    if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Chest.delete")) {
                         deleteConfig(player_id);
                     }
                 }
             }
-            System.out.println("[Falkenturm] PlayerInformationen erfolgreich geladen");
+            Main.getInstance().getLogger().info("[Falkenturm] PlayerInformationen erfolgreich geladen");
         }
     }
 
@@ -105,23 +107,23 @@ public class PlayerInformation {
             int jahreszahl = now.getYear() - lastlogout.getYear();
             if (jahreszahl == 0) {
                 int difference = now.getDayOfYear() - lastlogout.getDayOfYear();
-                if (difference > (DefaultConfig.getConfig().getInt("Falkenturm.Chest.time"))) {
+                if (difference > (new DefaultConfig().getConfig().getInt("Falkenturm.Chest.time"))) {
 
                     Config.set("Event.Chest.location", null);
                     Config.set("Event.Chest.set", false);
 
                     String name = Config.getString("Event.Name." + Config.getString("Event.Name.active"));
-                    System.out.println("[Falkenturm] Kistenstandort von " + player_id + ": " + name + " gelöscht");
+                    Main.getInstance().getLogger().info("[Falkenturm] Kistenstandort von " + player_id + ": " + name + " gelöscht");
                 }
             } else {
                 int abwesend = 365 - lastlogout.getDayOfYear();
-                if (abwesend + now.getDayOfYear() > DefaultConfig.getConfig().getInt("Falkenturm.Chest.Delete.time")) {
+                if (abwesend + now.getDayOfYear() > new DefaultConfig().getConfig().getInt("Falkenturm.Chest.Delete.time")) {
 
                     Config.set("Event.Chest.location", null);
                     Config.set("Event.Chest.set", false);
 
                     String name = Config.getString("Event.Name." + Config.getString("Event.Name.active"));
-                    System.out.println("[Falkenturm] Kistenstandort von " + player_id + ": " + name + " gelöscht");
+                    Main.getInstance().getLogger().info("[Falkenturm] Kistenstandort von " + player_id + ": " + name + " gelöscht");
                 }
             }
             save(player_id);
@@ -131,14 +133,14 @@ public class PlayerInformation {
     public void deleteConfig(Player player) throws IOException, InvalidConfigurationException, InterruptedException {
         this.player = player;
         Config = new PlayerInformation(player).Config;
-        String delete = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.delete");
-        String delete_false = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.delete_false");
+        String delete = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.delete");
+        String delete_false = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.delete_false");
 
         if(DeleteTimer.getInstance().getTime(player)) {
             Config.set("Event.Chest.location", null);
             Config.set("Event.Chest.set", false);
             save(player);
-            System.out.println("[Falkenturm] Kistenstandort von " + player.getUniqueId() + ": " + player.getName() + " gelöscht");
+            Main.getInstance().getLogger().info("[Falkenturm] Kistenstandort von " + player.getUniqueId() + ": " + player.getName() + " gelöscht");
             ResponseConfig.nullExecuter(player,delete);
         }
         else  ResponseConfig.nullExecuter(player,delete_false);
@@ -204,13 +206,13 @@ public class PlayerInformation {
      */
 
     public void setChestLocation(Player player, Location chestlocation) throws IOException, InvalidConfigurationException {
-        String verify_true = ResponseConfig.getConfig().getString("Response.Messages.Ausgabe.verify_true");
+        String verify_true = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.verify_true");
         this.player = player;
         Config = new PlayerInformation(player).getConfig(player);
 
         Config.set("Event.Chest.set",true);
         Config.set("Event.Chest.location",chestlocation);
-        System.out.println("[Falkenturm] Briefkasten wurde fuer Spieler: " + player.getName() + " gesetzt");
+        this.player.getServer().getLogger().info("[Falkenturm] Briefkasten wurde fuer Spieler: " + player.getName() + " gesetzt");
         save(player);
         AddTimer.getInstance().delTime(player);
         ResponseConfig.nullExecuter_void(player, verify_true);

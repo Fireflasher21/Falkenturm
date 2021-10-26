@@ -12,18 +12,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-public class main extends JavaPlugin {
+import java.util.logging.Level;
+
+public class Main extends JavaPlugin {
 
     public static StateFlag POSTSTELLE;
+    public DefaultConfig defaultConfig;
+    public ResponseConfig responseConfig;
+    private static Main instance;
+
 
     @Override
     public void onEnable() {
         Player player = null;
-        
+        instance = this;
         //Config
         try {
-            DefaultConfig.setup();
-            ResponseConfig.setup();
+            this.defaultConfig = new DefaultConfig();
+            this.responseConfig = new ResponseConfig();
             new PlayerInformation().loadConfig();
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
@@ -32,7 +38,7 @@ public class main extends JavaPlugin {
         //CommandExecuter
         this.getCommand("Falkenturm").setExecutor(new FalkenturmCommandExecuter());
         this.getCommand("Briefkasten").setExecutor(new LetterChestCommandExecuter());
-        Bukkit.getPluginManager().registerEvents(new Events(this), this);
+        Bukkit.getPluginManager().registerEvents(new Events(instance), instance);
         this.saveDefaultConfig();
 
     /*
@@ -61,9 +67,12 @@ public class main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-            getLogger().info("Falkenturm ist nicht aktiv");
-        }
+        getLogger().log(Level.WARNING,"Falkenturm ist nicht aktiv");
+    }
 
+    public static Main getInstance(){
+        return instance;
+    }
 
 
 }//end main class
