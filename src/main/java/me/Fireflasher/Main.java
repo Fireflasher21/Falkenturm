@@ -20,7 +20,7 @@ import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
 
-    public static Flag POSTSTELLE;
+    public static Flag FALKENTURM;
     public DefaultConfig defaultConfig;
     public ResponseConfig responseConfig;
     private static Main instance;
@@ -52,16 +52,16 @@ public class Main extends JavaPlugin {
     public void onLoad(){
         FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
         try {
-            // create a flag with the name "poststelle", defaulting to false
-            StateFlag flag = new StateFlag("poststelle", false);
+            // create a flag with the name "falkenturm", defaulting to false
+            StateFlag flag = new StateFlag("falkenturm", false);
             registry.register(flag);
-            POSTSTELLE = flag; // only set our field if there was no error
+            FALKENTURM = flag; // only set our field if there was no error
         } catch (FlagConflictException e) {
             // some other plugin registered a flag by the same name already.
             // you can use the existing flag, but this may cause conflicts - be sure to check type
-            Flag<?> existing = registry.get("poststelle");
+            Flag<?> existing = registry.get("falkenturm");
             if (existing instanceof StateFlag) {
-                POSTSTELLE = (StateFlag) existing;
+                FALKENTURM = (StateFlag) existing;
             } else {
                 // types don't match - this is bad news! some other plugin conflicts with you
                 // hopefully this never actually happens

@@ -88,20 +88,4 @@ public class DefaultConfig {
         }
     }
 
-    public void loadConfig() throws IOException, InvalidConfigurationException {
-        getConfig().options().header("DefaultConfig");
-        /*
-        getConfig().addDefault("Falkenturm.verify", false);
-
-         */
-        getConfig().addDefault("Falkenturm.Chest.delete", false);
-        getConfig().addDefault("Falkenturm.Chest.time", 30);
-        getConfig().addDefault("Falkenturm.Letter.to_worlds", true);
-        getConfig().addDefault("Falkenturm.Letter.close", true);
-        getConfig().addDefault("Falkenturm.Letter.change_author", false);
-
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-        getConfig().load(ConfigFile);
-    }
 }

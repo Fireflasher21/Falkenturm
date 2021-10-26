@@ -41,7 +41,7 @@ public class AddTimer {
     }
 
     public void delTime(Player player){
-        addtimer.times.remove(player, addtimer.times.get(player));
+        addtimer.times.clear();
 
     }
 
@@ -55,7 +55,7 @@ public class AddTimer {
     }
 
     public boolean getnull(Player player){
-        delTime();
+        delTime(player);
         return addtimer.times.isEmpty();
     }
 }

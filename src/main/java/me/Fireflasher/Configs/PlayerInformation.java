@@ -1,6 +1,7 @@
 package me.Fireflasher.Configs;
 
 import me.Fireflasher.HashMaps.AddTimer;
+import me.Fireflasher.HashMaps.ChestLocation;
 import me.Fireflasher.HashMaps.DeleteTimer;
 import me.Fireflasher.Main;
 import org.bukkit.Bukkit;
@@ -216,6 +217,8 @@ public class PlayerInformation {
         save(player);
         AddTimer.getInstance().delTime(player);
         ResponseConfig.nullExecuter_void(player, verify_true);
+
+        ChestLocation.getInstance().delLocation(player);
     }
 
     public Location getChestLocation(String  player_id) throws IOException, InvalidConfigurationException {

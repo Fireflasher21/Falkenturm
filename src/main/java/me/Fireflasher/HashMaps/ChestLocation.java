@@ -2,6 +2,7 @@ package me.Fireflasher.HashMaps;
 
 import me.Fireflasher.Configs.DefaultConfig;
 import me.Fireflasher.Configs.PlayerInformation;
+import me.Fireflasher.Configs.ResponseConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,18 +37,15 @@ public class ChestLocation {
 
     public void setLocation(Player player, Location location) throws InterruptedException, IOException, InvalidConfigurationException {
         chestLocation.maplocation.put(player, location);
+        final String verify_add = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_add");
         if( new DefaultConfig().getConfig().getBoolean("Falkenturm.verify")) {
 
             if (player.hasPermission("Briefkasten.verify")) {
 
                 chestLocation.chesttimer.put(player,LocalDateTime.now());
                 player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET +  "Du hast nun eine Stunde Zeit um deinen Briefkasten in der Poststelle zu registrieren");
-                wait(0x2255100L);
+                player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET +  "Du kannst Ihn mit " + ChatColor.BLUE + "/bk " + ChatColor.GREEN + " verify " + ChatColor.RESET + "in der Postelle registrieren");
 
-                if (!new PlayerInformation(player).getConfig(player).getBoolean("Event.Chest.set")) {
-                    player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Die Zeit ist abgelaufen. Um deinen Briefkasten zu registrieren, musst ihn erneut auswählen");
-                }
-                delLocation(player);
             }
             else player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RED + "Du bist nicht berechtigt eine Kiste zu registrieren. Wende dich an einen Admin");
         }
@@ -56,7 +54,7 @@ public class ChestLocation {
         }
     }
 
-    private void delLocation(Player player) {
+    public void delLocation(Player player) {
         if (!chestLocation.maplocation.isEmpty()) chestLocation.maplocation.remove(player, chestLocation.maplocation.get(player));
 
         if (!chestLocation.chesttimer.isEmpty() ) chestLocation.chesttimer.remove(player, chestLocation.chesttimer.get(player));

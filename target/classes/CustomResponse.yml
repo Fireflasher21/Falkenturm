@@ -4,13 +4,13 @@ Response:
   Messages:
     Help:
       add: '&4[Falkenturm]&r Damit kannst du eine Kiste auswählen welche ab sofort deinen Briefkasten darstellt'
-      verify_add: '&4[Falkenturm]&r Damit die ausgewählte Kiste gespeichert wird musst du sie in der Poststelle mit &9/Briefkasten &averify&r registrieren um Briefe zu bekommen'
+      verify_add: '&4[Falkenturm]&r Damit die ausgewählte Kiste gespeichert wird musst du sie in der Poststelle mit &9/briefkasten &averify&r registrieren um Briefe zu bekommen'
       delete: '&4[Falkenturm]&r Damit kannst du deinen bisherigen Briefkasten aus der Config löschen um einen neuen hinzufügen'
       verify: '&4[Falkenturm]&r Mit diesem Befehl meldest du der Postelle deinen Briefkasten und speicherst Ihn in der Config. Dazu musst du in der Poststelle stehen'
       verify_blocked: '&4[Falkenturm]&r Diese Funktion wurde deaktiviert'
       send: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler senden welcher einen Briefkasten besitzt'
       send_verify: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler senden welcher einen Briefkasten besitzt und du in der Poststelle bist'
-      default: '&4[Falkenturm]&r Benutze bitte einen gültigen Befehl von &9/Briefkasten &ahelp'
+      default: '&4[Falkenturm]&r Benutze bitte einen gültigen Befehl von &9/briefkasten &ahelp &2Befehl'
     No_Permission:
       help: '&4Du hast keine Berechtigung für den Command &ahelp'
       add: '&4Du hast keine Berechtigung für den Command &aadd'

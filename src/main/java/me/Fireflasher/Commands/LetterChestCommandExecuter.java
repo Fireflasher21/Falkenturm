@@ -153,8 +153,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
             player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.DARK_RED + "Befehle:");
 
 
-            player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Briefkasten " + ChatColor.GREEN + "help");
-            Main.getInstance().getLogger().info("[Falkenturm] /Briefkasten help");
+            player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Briefkasten " + ChatColor.GREEN + "help " + ChatColor.DARK_RED + "Befehl" );
             if (player.hasPermission("Briefkasten.add")) {
                 player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Briefkasten " + ChatColor.GREEN + "add");
             }
@@ -282,7 +281,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
                 DeleteTimer.getInstance().setTime(player);
                 DeleteTimer.getInstance().setCommand(player);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&4[Falkenturm]&r Bestätige mit &9/Briefkasten &adelete verify"));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&4[Falkenturm]&r Breche mit &9/Briefkasten &adelete decline ab"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&4[Falkenturm]&r Breche mit &9/Briefkasten &adelete decline &rab"));
                 return true;
             }
             return true;
@@ -413,48 +412,52 @@ public class LetterChestCommandExecuter implements CommandExecutor {
 
             ItemStack brief_sender = player.getInventory().getItemInMainHand();
             BookMeta brief_e_meta = (BookMeta) brief_sender.getItemMeta();
-            if (brief == 1){
-                if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.change_author")) {
-                    brief_e_meta.setAuthor("???");
-                }
-            }
-            else if (brief == 2){
-                if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.close")){
-                    List<String> pages = brief_e_meta.getPages();
-                    if ( pages.isEmpty() ){
-                        return ResponseConfig.nullExecuter(player, send_empty_book);
-                    }
-                    brief_sender.setType(Material.WRITTEN_BOOK);
-                    brief_e_meta.setPages(pages);
-                    if(brief_e_meta.getTitle() == null || brief_e_meta.getTitle().isEmpty()){
-                        brief_e_meta.setTitle("Brief");
-                    }
+            if(!verify || Flagaccess.inRegion(player)) {
+                if (brief == 1) {
                     if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.change_author")) {
                         brief_e_meta.setAuthor("???");
                     }
-                    else brief_e_meta.setAuthor(player.getName());
+                } else if (brief == 2) {
+                    if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.close")) {
+                        List<String> pages = brief_e_meta.getPages();
+                        if (pages.isEmpty()) {
+                            return ResponseConfig.nullExecuter(player, send_empty_book);
+                        }
+                        brief_sender.setType(Material.WRITTEN_BOOK);
+                        brief_e_meta.setPages(pages);
+                        if (brief_e_meta.getTitle() == null || brief_e_meta.getTitle().isEmpty()) {
+                            brief_e_meta.setTitle("Brief");
+                        }
+                        if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Letter.change_author")) {
+                            brief_e_meta.setAuthor("???");
+                        } else brief_e_meta.setAuthor(player.getName());
+                    }
                 }
-            }
-            if (verify) {
+                player.getInventory().remove(brief_sender);
+                brief_sender.setItemMeta(brief_e_meta);
+                chest_inventory.getInventory().addItem(brief_sender);
+                Main.getInstance().getLogger().info("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
+                return ResponseConfig.nullExecuter(player, send_true);
+            }//end Worldregiontest verify
+            else return ResponseConfig.nullExecuter(player, send_false);
+
+            /*
               if (Flagaccess.inRegion(player)) {
                     player.getInventory().remove(brief_sender);
                     brief_sender.setItemMeta(brief_e_meta);
                     chest_inventory.getInventory().addItem(brief_sender);
                     Main.getInstance().getLogger().info("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
                     return ResponseConfig.nullExecuter(player, send_true);
-                }//end Worldregiontest verify
-                else return ResponseConfig.nullExecuter(player, send_false);
-            }//end Configabfrage ob Regionprotect aktiv oder nicht
-            else {
+                }else {
                 player.getInventory().remove(brief_sender);
                 brief_sender.setItemMeta(brief_e_meta);
                 chest_inventory.getInventory().addItem(brief_sender);
                 Main.getInstance().getLogger().info("[Falkenturm] Spieler: " + player.getName() + " hat einen Brief an " + playerstring + " gesendet");
                 return ResponseConfig.nullExecuter(player, send_true);
-            }
-        }
-        else return ResponseConfig.nullExecuter(player, send_chest_space);
+                }*/
+        }else return ResponseConfig.nullExecuter(player, send_chest_space);
     }
+
 
 
 }//end of class

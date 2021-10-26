@@ -1,6 +1,6 @@
 Falkenturm:
 #Ob Worldguard Region zum Registrieren und senden von Briefen benutzt werden soll
-  verify: false
+  verify: true
 
   Chest:
     #Sollen die Kistendateien von Spielern gelöscht werden Default:false
@@ -9,7 +9,7 @@ Falkenturm:
     Time: 30
 
   Letter:
-    #Ob Briefe auch an Briefkasten in andere Welten als sdie derzeitige Spielerwelt gesendet werden können
+    #Ob Briefe auch an Briefkasten in andere Welten als die derzeitige Spielerwelt gesendet werden können
     to_worlds: true
     #Ob offene Briefe geschlossen werden sollen
     close: true

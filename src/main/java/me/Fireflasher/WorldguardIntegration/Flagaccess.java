@@ -47,7 +47,7 @@ public class Flagaccess extends JavaPlugin {
 
                 //if (WorldGuard.getInstance().getPlatform().getRegionContainer().get((World) player.getWorld()).getApplicableRegions()) {
                         for (ProtectedRegion regions : applicableRegionSet) {
-                                if (regions.getFlag(Main.POSTSTELLE).equals(allow)) {
+                                if (regions.getFlag(Main.FALKENTURM).equals(allow)) {
                                         return true;
                                 }
 

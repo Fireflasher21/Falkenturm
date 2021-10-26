@@ -4,7 +4,6 @@ import me.Fireflasher.Configs.PlayerInformation;
 import me.Fireflasher.HashMaps.AddTimer;
 import me.Fireflasher.HashMaps.ChestLocation;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
@@ -54,15 +53,10 @@ public class Events implements Listener {
     @EventHandler
     public static void onPlayerInteractEvent(PlayerInteractEvent event) throws IOException, InterruptedException, InvalidConfigurationException {
         Player player = event.getPlayer();
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
             if(AddTimer.getInstance().getTime(player)) {
-                if (event.getClickedBlock().getType() == Material.CHEST) {
-                    if(player.getGameMode() == GameMode.CREATIVE) {
-                        event.getClickedBlock().setType(event.getClickedBlock().getType());
-                        event.getClickedBlock().setBlockData(event.getClickedBlock().getBlockData());
-                    }
-                    ChestLocation.getInstance().setLocation(player, event.getClickedBlock().getLocation());
-                } else {
+                if (event.getClickedBlock().getType() == Material.CHEST) ChestLocation.getInstance().setLocation(player, event.getClickedBlock().getLocation());
+                else {
                     player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " +ChatColor.RESET + "Bitte wähle eine Kiste als Briefkasten");
                     AddTimer.getInstance().delTime(player);
                 }
