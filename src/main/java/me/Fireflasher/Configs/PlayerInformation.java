@@ -36,7 +36,7 @@ public class PlayerInformation {
             Config.options().header("Spielerspezifische Daten");
             Config.options().copyDefaults(true);
             save(player);
-            Main.getInstance().getLogger().info("[Falkenturm] Config erfolgreich erstellt für " + player.getName());
+            Main.getInstance().getLogger().info("Config erfolgreich erstellt für " + player.getName());
         }
         Config.load(ConfigFile);
     }
@@ -55,7 +55,7 @@ public class PlayerInformation {
     public void loadConfig() throws IOException, InvalidConfigurationException {
         File[] file = new File("plugins/Falkenturm/Player").listFiles();
         if (file == null) {
-            Main.getInstance().getLogger().info("[Falkenturm] Es existieren noch keine Playerdateien");
+            Main.getInstance().getLogger().info("Es existieren noch keine Playerdateien");
         }
         else {
             for (File value : file) {
@@ -73,7 +73,7 @@ public class PlayerInformation {
                     }
                 }
             }
-            Main.getInstance().getLogger().info("[Falkenturm] PlayerInformationen erfolgreich geladen");
+            Main.getInstance().getLogger().info("PlayerInformationen erfolgreich geladen");
         }
     }
 
@@ -114,7 +114,7 @@ public class PlayerInformation {
                     Config.set("Event.Chest.set", false);
 
                     String name = Config.getString("Event.Name." + Config.getString("Event.Name.active"));
-                    Main.getInstance().getLogger().info("[Falkenturm] Kistenstandort von " + player_id + ": " + name + " gelöscht");
+                    Main.getInstance().getLogger().info("Kistenstandort von " + player_id + ": " + name + " gelöscht");
                 }
             } else {
                 int abwesend = 365 - lastlogout.getDayOfYear();
@@ -124,7 +124,7 @@ public class PlayerInformation {
                     Config.set("Event.Chest.set", false);
 
                     String name = Config.getString("Event.Name." + Config.getString("Event.Name.active"));
-                    Main.getInstance().getLogger().info("[Falkenturm] Kistenstandort von " + player_id + ": " + name + " gelöscht");
+                    Main.getInstance().getLogger().info("Kistenstandort von " + player_id + ": " + name + " gelöscht");
                 }
             }
             save(player_id);
@@ -141,7 +141,7 @@ public class PlayerInformation {
             Config.set("Event.Chest.location", null);
             Config.set("Event.Chest.set", false);
             save(player);
-            Main.getInstance().getLogger().info("[Falkenturm] Kistenstandort von " + player.getUniqueId() + ": " + player.getName() + " gelöscht");
+            Main.getInstance().getLogger().info("Kistenstandort von " + player.getUniqueId() + ": " + player.getName() + " gelöscht");
             ResponseConfig.nullExecuter(player,delete);
         }
         else  ResponseConfig.nullExecuter(player,delete_false);
@@ -213,7 +213,7 @@ public class PlayerInformation {
 
         Config.set("Event.Chest.set",true);
         Config.set("Event.Chest.location",chestlocation);
-        this.player.getServer().getLogger().info("[Falkenturm] Briefkasten wurde fuer Spieler: " + player.getName() + " gesetzt");
+        this.player.getServer().getLogger().info("Briefkasten wurde fuer Spieler: " + player.getName() + " gesetzt");
         save(player);
         AddTimer.getInstance().delTime(player);
         ResponseConfig.nullExecuter_void(player, verify_true);

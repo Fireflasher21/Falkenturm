@@ -1,7 +1,8 @@
 name: Falkenturm
 main: me.Fireflasher.Main
-version: 1.0
+version: 2.0
 api-version: 1.17
+load: POSTWORLD
 depend: [WorldGuard]
 
 commands:
@@ -14,21 +15,31 @@ commands:
     usage: /Falkenturm version
     description: Plugin Version
     default: true
-  KT help:
+  FT help:
     usage: /Falkenturm help
     description: Zeig aktive Befehle
     default: true
     permission: Falkenturm.help
-  KT Info:
+  FT Info:
     usage: /Falkenturm info
     description: Gibt Info über Plugin
     default: true
     permission: Falkenturm.help
-  KT Reload:
+  FT Reload:
     usage: /Falkenturm reload
     description: Reloaded die Plugin Configs
     default: false
     permission: Falkenturm.reload
+  FT Region:
+    usage: /Falkenturm create region
+    description: Create Worldguard Region
+    default: false
+    permission: Falkenturm.region
+  FT setFlag:
+    usage: /Falkenturm setFlag
+    description: Set Regionflag Falkenturm
+    default: false
+    permission: Falkenturm.setflag
 
   Briefkasten:
     usage: /Briefkasten
@@ -77,6 +88,11 @@ permissions:
       Falkenturm.version: true
       Falkenturm.info: true
       Falkenturm.reload: true
+      Falkenturm.region: true
+      Falkenturm.setflag: true
+  Falkenturm.region:
+    children:
+      Falkenturm.setflag: true
 
   Briefkasten.*:
     description: Zugriff auf Briefkasten Befehle

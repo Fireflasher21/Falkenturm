@@ -4,11 +4,13 @@ package me.Fireflasher.Commands;
 import me.Fireflasher.Configs.DefaultConfig;
 import me.Fireflasher.Configs.PlayerInformation;
 import me.Fireflasher.Configs.ResponseConfig;
+import me.Fireflasher.WorldguardIntegration.CreateRegion;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Player;
 
 import java.io.IOException;
 
@@ -17,6 +19,8 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
     public FalkenturmCommandExecuter() {}
 
     //Config
+    private final boolean verify = new DefaultConfig().getConfig().getBoolean("Falkenturm.verify");
+    private final String verify_blocked = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_blocked");
     private final String perm_help = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.help");
     private final String perm_default = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.default");
 
@@ -25,11 +29,7 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
         //Falkenturm Commandreihe
         if (cmd.getName().equalsIgnoreCase("Falkenturm")) {
             if(sender.hasPermission("Falkenturm")) {
-                if (args.length == 0) {
-                    sender.sendMessage("Für genauere Informationen benutze /Falkenturm help ");
-                    return true;
-                }//Command
-                else if (args.length == 1) {
+                if (args.length == 1) {
                     switch (args[0]) {
 
                         case "help":
@@ -47,15 +47,41 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
                             } catch (IOException | InvalidConfigurationException e) {
                                 e.printStackTrace();
                             }
-
+                        case "create":
+                            sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Bitte benutze " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "create region " + ChatColor.RED + "REGIONSNAME " + ChatColor.AQUA + "Radius");
+                            return true;
+                        case "setFlag":
+                            sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Benutze " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "addFlag" + ChatColor.RED + " Regionsname " + ChatColor.AQUA + "true/false " + ChatColor.RESET + "um die Region für eine Poststelle zu aktivieren") ;
+                            return true;
                         default:
-                            sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + "Benutze bitte " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "help " + "für die Befehle");
+                            sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Benutze bitte " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "help " + "für die Befehle");
                             return false;
                     }
-                }
-                else {
-                    sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + "Benutze bitte " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "help " + "für die Befehle");
-                    return false;
+                }else if(args.length >= 2) {
+                    switch (args[0]) {
+                        case "create":
+                            if (sender instanceof Player player) {
+                                if (verify) return CreateRegion.onCommand(player, args);
+                                else return ResponseConfig.nullExecuter(player, verify_blocked);
+                            } else {
+                                sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Dieser Command kann nur von einem Spieler ausgeführt werden");
+                                return true;
+                            }
+                        case "setFlag":
+                            if (sender instanceof Player player) {
+                                if (verify) return CreateRegion.setFlag(player, args);
+                                else return ResponseConfig.nullExecuter(player, verify_blocked);
+                            } else {
+                                sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Dieser Command kann nur von einem Spieler ausgeführt werden");
+                                return true;
+                            }
+                        default:
+                            sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + "Benutze bitte " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "help " + "für die Befehle");
+                            return true;
+                    }
+                }else{
+                    sender.sendMessage("Für genauere Informationen benutze /Falkenturm help");
+                    return true;
                 }
             }//Falkenturm Berechtigung
             else {
@@ -80,6 +106,12 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
             }
             if (sender.hasPermission("Falkenturm.info")) {
                 sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "info");
+            }
+            if(sender.hasPermission("Falkenturm.region")){
+                sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "create");
+            }
+            if(sender.hasPermission("Falkenturm.setFlag")){
+                sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "setFlag");
             }
             sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.BLUE + "/Briefkasten " + ChatColor.GREEN + "help");
             return true;

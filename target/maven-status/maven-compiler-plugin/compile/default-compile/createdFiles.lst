@@ -1,6 +1,7 @@
 me\Fireflasher\Configs\PlayerInformation.class
 me\Fireflasher\Commands\LetterChestCommandExecuter.class
 me\Fireflasher\HashMaps\AddTimer.class
+me\Fireflasher\WorldguardIntegration\CreateRegion.class
 me\Fireflasher\Events.class
 me\Fireflasher\HashMaps\DeleteTimer.class
 me\Fireflasher\HashMaps\ChestLocation.class
