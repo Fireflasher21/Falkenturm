@@ -1,5 +1,17 @@
 package me.Fireflasher.Commands;
 
+/*
+ * This file is part of Falkenturm
+ *
+ * Falkenturm is a privat created Plugin which is not yet published
+ *
+ * If you copy or use the code below without consulting me first and getting a commitment, you are entering illegal area
+ * If I get to know about such cases, I will take legal action
+ *
+ * You can contact me under my Git Acc:
+ * https://github.com/Fireflasher21
+ */
+
 import me.Fireflasher.Configs.DefaultConfig;
 import me.Fireflasher.Configs.PlayerInformation;
 import me.Fireflasher.Configs.ResponseConfig;
@@ -373,7 +385,7 @@ public class LetterChestCommandExecuter implements CommandExecutor {
                     return send_brief(player, playerstring);
                 }
                 else {
-                    if( online == 1) new PlayerInformation().deleteConfig(Bukkit.getPlayer(playerstring));
+                    if( online == 1) new PlayerInformation().deleteConfig(Bukkit.getPlayer(playerstring),1);
                     if( online == 2) {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerstring);
                         FileConfiguration con = new PlayerInformation().getConfig(offlinePlayer.getUniqueId().toString());

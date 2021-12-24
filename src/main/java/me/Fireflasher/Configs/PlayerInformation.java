@@ -1,5 +1,17 @@
 package me.Fireflasher.Configs;
 
+/*
+ * This file is part of Falkenturm
+ *
+ * Falkenturm is a privat created Plugin which is not yet published
+ *
+ * If you copy or use the code below without consulting me first and getting a commitment, you are entering illegal area
+ * If I get to know about such cases, I will take legal action
+ *
+ * You can contact me under my Git Acc:
+ * https://github.com/Fireflasher21
+ */
+
 import me.Fireflasher.HashMaps.AddTimer;
 import me.Fireflasher.HashMaps.ChestLocation;
 import me.Fireflasher.HashMaps.DeleteTimer;
@@ -149,6 +161,19 @@ public class PlayerInformation {
 
     }
 
+    public void deleteConfig(Player player, int chestexist) throws IOException, InvalidConfigurationException {
+        this.player = player;
+        Config = new PlayerInformation(player).Config;
+        if(chestexist == 1){
+            Config.set("Event.Chest.location", null);
+            Config.set("Event.Chest.set", false);
+            save(player);
+            Main.getInstance().getLogger().info("Kistenstandort von " + player.getUniqueId() + ": " + player.getName() + " gelöscht, da nicht mehr existent");
+        }
+
+
+    }
+
     private void nameChange(Player player, int i) throws IOException, InvalidConfigurationException {
         this.player = player;
         if(Config.getString("Event.Names." + i) == null){
@@ -182,7 +207,7 @@ public class PlayerInformation {
     }
 
     public void setQuitConfig(Player player, String leavetime) throws IOException, InvalidConfigurationException {
-        player = player;
+        this.player = player;
         Config.set("Event.LastLogout", leavetime);
         save(player);
     }

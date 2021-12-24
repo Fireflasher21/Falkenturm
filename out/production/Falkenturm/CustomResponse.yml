@@ -1,0 +1,50 @@
+# Wähle deine Antworten
+
+Response:
+  Messages:
+    Help:
+      add: '&4[Falkenturm]&r Damit kannst du eine Kiste auswählen welche ab sofort deinen Briefkasten darstellt'
+      verify_add: '&4[Falkenturm]&r Damit die ausgewählte Kiste gespeichert wird musst du sie in der Poststelle mit &9/briefkasten &averify&r registrieren um Briefe zu bekommen'
+      delete: '&4[Falkenturm]&r Damit kannst du deinen bisherigen Briefkasten aus der Config löschen um einen neuen hinzufügen'
+      verify: '&4[Falkenturm]&r Mit diesem Befehl meldest du der Postelle deinen Briefkasten und speicherst Ihn in der Config. Dazu musst du in der Poststelle stehen'
+      verify_blocked: '&4[Falkenturm]&r Diese Funktion wurde deaktiviert'
+      send: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler senden welcher einen Briefkasten besitzt'
+      send_verify: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler senden welcher einen Briefkasten besitzt und du in der Poststelle bist'
+      default: '&4[Falkenturm]&r Benutze bitte einen gültigen Befehl von &9/briefkasten &ahelp &2Befehl'
+    No_Permission:
+      help: '&4Du hast keine Berechtigung für den Command &ahelp'
+      add: '&4Du hast keine Berechtigung für den Command &aadd'
+      delete: '&4Du hast keine Berechtigung für den Command &adelete'
+      verify: '&4Du hast keine Berechtigung für den Command &averify'
+      send: '&4Du hast keine Berechtigung für den Command &asend'
+      default: '&4Du hast keine Berechtigung für diesen Command'
+      'null': '&4Bitte achte auf deine ResponseConfig Einstellungen'
+      onlyplayer: '&4Diesen Befehl kann nur ein Spieler ausführen'
+    Ausgabe:
+      add: '&4[Falkenturm]&r Bitte wähle deinen Briefkasten'
+      add_pending: '&4[Falkenturm]&r Du hast noch eine Anfrage laufen'
+      add_nopending: '&4[Falkenturm]&r Du hast keine austehende Anfrage'
+      #Falls noch ein existenter Briefkasten vorhanden
+      add_false: '&4[Falkenturm]&r Du besitzt noch einen aktiven Briefkasten. Lösche diesen zuerst'
+      delete: '&4[Falkenturm]&r Briefkasten entfernt'
+      #Timout Message bei Delete Command
+      delete_false: '&4[Falkenturm]&r Briefkasten nicht entfernt, da die Anfrage zu weit zurückliegt'
+      delete_verify1: '&4[Falkenturm]&r Bist du dir sicher das du deinen Briefkasten löschen willst?'
+      #Wenn man Erfolgreich die Kiste registriert hat
+      verify_true: '&4[Falkenturm]&r Die Poststelle hat deinen Briefkasten nun registriert'
+      #Wenn man sich nicht in der Zone befindet
+      verify_false: '&4[Falkenturm]&r Bitte finde dich in der Poststelle ein um deinen Briefkasten anzumelden'
+      #Wenn man Erfolgreich einen Brief abgesendet hat
+      send_true: '&4[Falkenturm]&r Dein Brief wurde an den Briefkasten der Person zugestellt'
+      #Wenn man sich nicht in der Zone befindet
+      send_false: '&4[Falkenturm]&r Du musst dich in der Poststelle befinden um den Brief abzusenden'
+      #Nachricht, wenn man keinen Spieler angegeben hat
+      send_false_np: '&4[Falkenturm]&r Gib einen Spieler an'
+      #Wenn man einen nicht existenten Spieler angibt (Off und Online)
+      send_false_pl: '&4[Falkenturm]&r Diesen Spieler gibt es nicht'
+      send_no_chest: '&4[Falkenturm]&r Der Spieler besitzt keinen Briefkasten'
+      send_chest_space: '&4[Falkenturm]&r Der Briefkasten ist voll'
+      #Wenn ein Item verschicken will, dass keinem Buch entspricht
+      send_no_book: '&4[Falkenturm]&r Du brauchst einen gültigen Brief'
+      #Wenn man einen leeren Brief aussenenden wil
+      send_empty_book: '&4[Falkenturm]&r Du kannst keinen leeren Brief versenden'

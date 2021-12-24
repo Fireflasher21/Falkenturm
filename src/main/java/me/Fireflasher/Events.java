@@ -1,5 +1,17 @@
 package me.Fireflasher;
 
+/*
+ * This file is part of Falkenturm
+ *
+ * Falkenturm is a privat created Plugin which is not yet published
+ *
+ * If you copy or use the code below without consulting me first and getting a commitment, you are entering illegal area
+ * If I get to know about such cases, I will take legal action
+ *
+ * You can contact me under my Git Acc:
+ * https://github.com/Fireflasher21
+ */
+
 import me.Fireflasher.Configs.PlayerInformation;
 import me.Fireflasher.HashMaps.AddTimer;
 import me.Fireflasher.HashMaps.ChestLocation;
