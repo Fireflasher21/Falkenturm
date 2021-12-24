@@ -10,7 +10,7 @@ package me.Fireflasher.HashMaps;
  *
  * You can contact me under my Git Acc:
  * https://github.com/Fireflasher21
- */
+*/
 
 import org.bukkit.entity.Player;
 
