@@ -42,6 +42,9 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Player player = null;
         instance = this;
+
+
+
         //Config
         try {
             this.defaultConfig = new DefaultConfig();

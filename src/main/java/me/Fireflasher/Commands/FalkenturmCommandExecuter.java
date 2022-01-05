@@ -15,6 +15,7 @@ package me.Fireflasher.Commands;
 import me.Fireflasher.Configs.DefaultConfig;
 import me.Fireflasher.Configs.PlayerInformation;
 import me.Fireflasher.Configs.ResponseConfig;
+import me.Fireflasher.Main;
 import me.Fireflasher.WorldguardIntegration.CreateRegion;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,12 +29,14 @@ import java.io.IOException;
 public class FalkenturmCommandExecuter implements CommandExecutor {
 
     public FalkenturmCommandExecuter() {}
+    private final DefaultConfig DEFAULTCONFIG = Main.getInstance().defaultConfig;
+    private final ResponseConfig RESPONSECONFIG = Main.getInstance().responseConfig;
 
     //Config
-    private final boolean verify = new DefaultConfig().getConfig().getBoolean("Falkenturm.verify");
-    private final String verify_blocked = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_blocked");
-    private final String perm_help = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.help");
-    private final String perm_default = new ResponseConfig().getConfig().getString("Response.Messages.No_Permission.default");
+    private final boolean verify = DEFAULTCONFIG.getConfig().getBoolean("Falkenturm.verify");
+    private final String verify_blocked = RESPONSECONFIG.getConfig().getString("Response.Messages.Help.verify_blocked");
+    private final String perm_help = RESPONSECONFIG.getConfig().getString("Response.Messages.No_Permission.help");
+    private final String perm_default = RESPONSECONFIG.getConfig().getString("Response.Messages.No_Permission.default");
 
     @Override
     public boolean onCommand (CommandSender sender, Command cmd, String label, String[] args) {
@@ -158,8 +161,8 @@ public class FalkenturmCommandExecuter implements CommandExecutor {
     private boolean command_reload(CommandSender sender) throws IOException, InvalidConfigurationException {
         if (sender.hasPermission("Falkenturm.reload")) {
             sender.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.GREEN + "Wurde erfolgreich reloaded");
-            new DefaultConfig().reloadConfig();
-            new ResponseConfig().reloadConfig();
+            DEFAULTCONFIG.reloadConfig();
+            RESPONSECONFIG.reloadConfig();
             new PlayerInformation().loadConfig();
 
             return true;

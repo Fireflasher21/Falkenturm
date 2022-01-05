@@ -35,6 +35,8 @@ public class PlayerInformation {
     private Player player;
     private File ConfigFile;
     private FileConfiguration Config;
+    private final DefaultConfig DEFAULTCONFIG = Main.getInstance().defaultConfig;
+    private final ResponseConfig RESPONSECONFIG = Main.getInstance().responseConfig;
 
     public PlayerInformation(){
     }
@@ -80,7 +82,7 @@ public class PlayerInformation {
                 else {
                     Config = new PlayerInformation(player_id).Config;
 
-                    if (new DefaultConfig().getConfig().getBoolean("Falkenturm.Chest.delete")) {
+                    if (DEFAULTCONFIG.getConfig().getBoolean("Falkenturm.Chest.delete")) {
                         deleteConfig(player_id);
                     }
                 }
@@ -120,7 +122,7 @@ public class PlayerInformation {
             int jahreszahl = now.getYear() - lastlogout.getYear();
             if (jahreszahl == 0) {
                 int difference = now.getDayOfYear() - lastlogout.getDayOfYear();
-                if (difference > (new DefaultConfig().getConfig().getInt("Falkenturm.Chest.time"))) {
+                if (difference > (DEFAULTCONFIG.getConfig().getInt("Falkenturm.Chest.time"))) {
 
                     Config.set("Event.Chest.location", null);
                     Config.set("Event.Chest.set", false);
@@ -130,7 +132,7 @@ public class PlayerInformation {
                 }
             } else {
                 int abwesend = 365 - lastlogout.getDayOfYear();
-                if (abwesend + now.getDayOfYear() > new DefaultConfig().getConfig().getInt("Falkenturm.Chest.Delete.time")) {
+                if (abwesend + now.getDayOfYear() > DEFAULTCONFIG.getConfig().getInt("Falkenturm.Chest.Delete.time")) {
 
                     Config.set("Event.Chest.location", null);
                     Config.set("Event.Chest.set", false);
@@ -146,8 +148,8 @@ public class PlayerInformation {
     public void deleteConfig(Player player) throws IOException, InvalidConfigurationException, InterruptedException {
         this.player = player;
         Config = new PlayerInformation(player).Config;
-        String delete = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.delete");
-        String delete_false = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.delete_false");
+        String delete = RESPONSECONFIG.getConfig().getString("Response.Messages.Ausgabe.delete");
+        String delete_false = RESPONSECONFIG.getConfig().getString("Response.Messages.Ausgabe.delete_false");
 
         if(DeleteTimer.getInstance().getTime(player)) {
             Config.set("Event.Chest.location", null);
@@ -232,7 +234,7 @@ public class PlayerInformation {
      */
 
     public void setChestLocation(Player player, Location chestlocation) throws IOException, InvalidConfigurationException {
-        String verify_true = new ResponseConfig().getConfig().getString("Response.Messages.Ausgabe.verify_true");
+        String verify_true = RESPONSECONFIG.getConfig().getString("Response.Messages.Ausgabe.verify_true");
         this.player = player;
         Config = new PlayerInformation(player).getConfig(player);
 

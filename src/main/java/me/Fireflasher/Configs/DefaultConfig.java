@@ -63,7 +63,7 @@ public class DefaultConfig {
         try {
             this.getConfig().save(this.ConfigFile);
         } catch (IOException ioe) {
-            plugin.getLogger().log(Level.SEVERE, "ResponseConfig konnte nicht geladen werden" + this.ConfigFile, ioe);
+            plugin.getLogger().log(Level.SEVERE, "DefaultConfig konnte nicht geladen werden" + this.ConfigFile, ioe);
         }
     }
 
