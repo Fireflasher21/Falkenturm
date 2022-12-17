@@ -60,7 +60,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Events(instance), instance);
         this.saveDefaultConfig();
 
-        getLogger().info("Falkenturm ist aktiv");
+        getLogger().info("Falkenturm is loaded");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().log(Level.WARNING,"Falkenturm ist nicht aktiv");
+        getLogger().log(Level.WARNING,"Falkenturm is not loaded");
     }
 
     public static Main getInstance(){

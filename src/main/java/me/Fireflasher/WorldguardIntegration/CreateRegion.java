@@ -22,6 +22,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import me.Fireflasher.Configs.ResponseConfig;
 import me.Fireflasher.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -30,7 +31,18 @@ import java.util.logging.Level;
 
 public class CreateRegion {
 
+
+    private static final ResponseConfig RESPONSECONFIG = Main.getInstance().responseConfig;
+
     public static boolean onCommand(Player player, String[] args){
+        final String create_false = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.create_false");
+        final String create_true = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.create_true.message");
+        final String create_true_name = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.create_true.message.name");
+        final String create_true_cords = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.create_true.message.coordinates");
+        final String create_true_radius = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.create_true.message.radius");
+        final String create_error = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.create_error");
+        final String help_region = RESPONSECONFIG.getConfig().getString("Response.Messages.Help.region");
+
         if(args.length == 4) {
             if (args[1].equalsIgnoreCase("region")) {
                 //da Radius ungerade Zahlen
@@ -55,26 +67,33 @@ public class CreateRegion {
 
                     RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
                     RegionManager regionManager = container.get(localPlayer.getWorld());
+
+
                     if(region == null){
-                        player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Die Region konnte nicht erstellt werden");
+                        player.sendMessage(create_false);
                         return  true;
                     }else{
                         regionManager.addRegion(region);
-                        player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Die Region " + regionname + " wurde an mit einem Radius von " + radius + " Blöcken um X: " + location.getBlockX() + " und Y: " + location.getBlockZ() + " erstellt");
+                        player.sendMessage(create_true + "\n" + create_true_name + " " + regionname + "\n" + create_true_radius + " " + radius + "\n" + create_true_cords + " " + location.getBlockX() + "," + location.getBlockZ());
                         return  true;
                     }
 
                 }
-                else player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Radius muss eine Zahl zwischen " + MIN + " und "+ MAX + " sein");
+                else player.sendMessage(create_error + " " + MIN + " - " + MAX)    ;
             }
         }else {
-            player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Bitte benutze " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "create region " + ChatColor.RED + "REGIONSNAME " + ChatColor.AQUA + "Radius");
+            player.sendMessage(help_region);
             return true;
         }
         return false;
     }
 
     public static boolean setFlag(Player player, String[] args) {
+        final String activate = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.setflag_true");
+        final String deactivate = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.setflag_false");
+        final String help_values = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.setflag_values");
+        final String setflag_error = RESPONSECONFIG.getConfig().getString("Response.Messages.Region.setflag_error");
+        final String help_setflag = RESPONSECONFIG.getConfig().getString("Response.Messages.Help.setflag");
         if (args.length == 3) {
             String regionname = args[1];
 
@@ -87,26 +106,26 @@ public class CreateRegion {
                 if(parseboolean(value)){
                     if(parseboolean(value)){
                         region.setFlag(Main.FALKENTURM, StateFlag.State.ALLOW);
-                        player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Poststelle in der Region " + ChatColor.GREEN + regionname + ChatColor.RESET + " wurde deaktiviert");
-                        player.getServer().getLogger().log(Level.INFO, "[Falkenturm] Poststelle in der Region " + regionname + " wurde deaktiviert");
+                        player.sendMessage( activate + " " + regionname );
+                        player.getServer().getLogger().log(Level.INFO, activate + " " + regionname);
                     }
                     else {
                         region.setFlag(Main.FALKENTURM, StateFlag.State.DENY);
-                        player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Poststelle in der Region " + ChatColor.GREEN + regionname + ChatColor.RESET + " wurde aktiviert");
-                        player.getServer().getLogger().log(Level.INFO, "[Falkenturm] Poststelle in der Region " + regionname + " wurde aktiviert");
+                        player.sendMessage(deactivate + " " + regionname);
+                        player.getServer().getLogger().log(Level.INFO, deactivate + " " + regionname);
                     }
                     return true;
                 }
                 else {
-                    player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Gib als Wert bitte " + ChatColor.RED + "true/false " +ChatColor.RESET + "an");
+                    player.sendMessage(help_values);
                     return true;
                 }
             }else {
-                player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Region konnten nicht gefunden werden");
+                player.sendMessage(setflag_error);
                 return true;
             }
         }
-        player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET + "Bitte benutze " + ChatColor.BLUE + "/Falkenturm " + ChatColor.GREEN + "setFlag" + ChatColor.RED + "REGIONSNAME " + ChatColor.AQUA + "true/false");
+        player.sendMessage(help_setflag);
         return true;
     }
 

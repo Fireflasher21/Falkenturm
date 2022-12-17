@@ -15,6 +15,7 @@ package me.Fireflasher.HashMaps;
 import me.Fireflasher.Configs.DefaultConfig;
 import me.Fireflasher.Configs.PlayerInformation;
 import me.Fireflasher.Configs.ResponseConfig;
+import me.Fireflasher.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,7 +29,9 @@ import java.util.HashMap;
 
 public class ChestLocation {
 
-    private final boolean verify = new DefaultConfig().getConfig().getBoolean("Falkenturm.verify");
+    private final DefaultConfig DEFAULTCONFIG = Main.getInstance().defaultConfig;
+    private final ResponseConfig RESPONSECONFIG = Main.getInstance().responseConfig;
+    private final boolean verify = DEFAULTCONFIG.getConfig().getBoolean("Falkenturm.verify");
 
     private static ChestLocation chestLocation;
     private final HashMap<Player, Location> maplocation;
@@ -48,15 +51,16 @@ public class ChestLocation {
     }
 
     public void setLocation(Player player, Location location) throws InterruptedException, IOException, InvalidConfigurationException {
+        final String add_timer = RESPONSECONFIG.getConfig().getString("Response.Messages.Ausgabe.add_timer");
+        final String verify_add = RESPONSECONFIG.getConfig().getString("Response.Messages.Help.verify_add");
         chestLocation.maplocation.put(player, location);
-        final String verify_add = new ResponseConfig().getConfig().getString("Response.Messages.Help.verify_add");
-        if( new DefaultConfig().getConfig().getBoolean("Falkenturm.verify")) {
+        if(verify) {
 
             if (player.hasPermission("Briefkasten.verify")) {
 
                 chestLocation.chesttimer.put(player,LocalDateTime.now());
-                player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET +  "Du hast nun eine Stunde Zeit um deinen Briefkasten in der Poststelle zu registrieren");
-                player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RESET +  "Du kannst Ihn mit " + ChatColor.BLUE + "/bk " + ChatColor.GREEN + " verify " + ChatColor.RESET + "in der Postelle registrieren");
+                player.sendMessage(add_timer);
+                player.sendMessage(verify_add);
 
             }
             else player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " + ChatColor.RED + "Du bist nicht berechtigt eine Kiste zu registrieren. Wende dich an einen Admin");

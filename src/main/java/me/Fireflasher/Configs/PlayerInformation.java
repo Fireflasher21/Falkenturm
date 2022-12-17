@@ -221,17 +221,6 @@ public class PlayerInformation {
         save(player);
     }
 
-    /*
-    public static void chestUse(Player player) throws IOException, InvalidConfigurationException, InterruptedException {
-        //TODO Kisteninteractevent funktioniert nicht
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime time = now;
-        time = time.plusMinutes(1);
-        while (LocalDateTime.now().isBefore(time)) {
-
-        }
-    }
-     */
 
     public void setChestLocation(Player player, Location chestlocation) throws IOException, InvalidConfigurationException {
         String verify_true = RESPONSECONFIG.getConfig().getString("Response.Messages.Ausgabe.verify_true");

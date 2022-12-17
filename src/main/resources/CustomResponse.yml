@@ -10,6 +10,8 @@ Response:
       verify_blocked: '&4[Falkenturm]&r Diese Funktion wurde deaktiviert'
       send: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler senden welcher einen Briefkasten besitzt'
       send_verify: '&4[Falkenturm]&r Mit diesem Command kannst du einen Brief an einen Spieler senden welcher einen Briefkasten besitzt und du in der Poststelle bist'
+      region: '&[Falkenturm]&r Benutze bitte &9/Falkenturm &acreate region &cREGIONSNAME &bRADIUS'
+      setflag: '&[Falkenturm]&r Benutze bitte &9/Falkenturm &asetFlag &cREGIONSNAME &bTrue/False'
       default: '&4[Falkenturm]&r Benutze bitte einen gültigen Befehl von &9/briefkasten &ahelp &2Befehl'
     No_Permission:
       help: '&4Du hast keine Berechtigung für den Command &ahelp'
@@ -24,6 +26,7 @@ Response:
       add: '&4[Falkenturm]&r Bitte wähle deinen Briefkasten'
       add_pending: '&4[Falkenturm]&r Du hast noch eine Anfrage laufen'
       add_nopending: '&4[Falkenturm]&r Du hast keine austehende Anfrage'
+      add_timer: '&4[Falkenturm]&r Du hast nun eine Stunde Zeit um deinen Briefkasten in der Poststelle zu registrieren'
       #Falls noch ein existenter Briefkasten vorhanden
       add_false: '&4[Falkenturm]&r Du besitzt noch einen aktiven Briefkasten. Lösche diesen zuerst'
       delete: '&4[Falkenturm]&r Briefkasten entfernt'
@@ -48,3 +51,16 @@ Response:
       send_no_book: '&4[Falkenturm]&r Du brauchst einen gültigen Brief'
       #Wenn man einen leeren Brief aussenenden wil
       send_empty_book: '&4[Falkenturm]&r Du kannst keinen leeren Brief versenden'
+    Region:
+      #Nach create_true werden folgende Daten angefügt: Name, Koords, Radius
+      create_true:
+        message: '&4[Falkenturm]&r Die Region wurde mit folgenden Daten Erstellt:'
+        name: 'Name:'
+        coordinates: 'Koordinaten:'
+        radius: 'Radius:'
+      create_false: '&4[Falkenturm]&r Die Region konnte nicht erstellt werden'
+      create_error: '&4[Falkenturm]&r Der maximale Radius liegt zwischen den Zahlen:'
+      setflag_true: '&4[Falkenturm]&r Die Poststelle in folgender Region wurde aktiviert:'
+      setflag_false: '&4[Falkenturm]&r Die Poststelle in folgender Region wurde deaktiviert:'
+      setflag_value : '&[Falkenturm]&r Benutze bitte die Werte &cTrue&r oder &cFalse&r'
+      setflag_error : '&[Falkenturm]&r Region konnte nicht gefunden werden'

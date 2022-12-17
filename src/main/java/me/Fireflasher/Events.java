@@ -13,6 +13,7 @@ package me.Fireflasher;
  */
 
 import me.Fireflasher.Configs.PlayerInformation;
+import me.Fireflasher.Configs.ResponseConfig;
 import me.Fireflasher.HashMaps.AddTimer;
 import me.Fireflasher.HashMaps.ChestLocation;
 import org.bukkit.ChatColor;
@@ -35,6 +36,7 @@ import java.time.format.DateTimeFormatter;
 public class Events implements Listener {
 
     public static Plugin plugin;
+    private static final ResponseConfig RESPONSECONFIG = Main.getInstance().responseConfig;
 
     public Events(Plugin plugin){
         Events.plugin = plugin;
@@ -64,12 +66,14 @@ public class Events implements Listener {
 
     @EventHandler
     public static void onPlayerInteractEvent(PlayerInteractEvent event) throws IOException, InterruptedException, InvalidConfigurationException {
+        String addChest = RESPONSECONFIG.getConfig().getString("Response.Messages.Ausgabe.add");
+
         Player player = event.getPlayer();
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
             if(AddTimer.getInstance().getTime(player)) {
                 if (event.getClickedBlock().getType() == Material.CHEST) ChestLocation.getInstance().setLocation(player, event.getClickedBlock().getLocation());
                 else {
-                    player.sendMessage(ChatColor.DARK_RED + "[Falkenturm] " +ChatColor.RESET + "Bitte wähle eine Kiste als Briefkasten");
+                    player.sendMessage(addChest);
                     AddTimer.getInstance().delTime(player);
                 }
             }
