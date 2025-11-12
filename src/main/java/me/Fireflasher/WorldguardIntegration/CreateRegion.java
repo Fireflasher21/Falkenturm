@@ -114,15 +114,13 @@ public class CreateRegion {
                         player.sendMessage(deactivate + " " + regionname);
                         player.getServer().getLogger().log(Level.INFO, deactivate + " " + regionname);
                     }
-                    return true;
                 }
                 else {
                     player.sendMessage(help_values);
-                    return true;
+
                 }
             }else {
                 player.sendMessage(setflag_error);
-                return true;
             }
         }
         player.sendMessage(help_setflag);
@@ -138,12 +136,7 @@ public class CreateRegion {
         }
     }
     private static boolean parseboolean(String value){
-        try {
-            Boolean.parseBoolean( value);
-            return true;
-        }catch (ClassCastException cce){
-            return false;
-        }
+        return value.equalsIgnoreCase("true") || value.equalsIgnoreCase("allow");
     }
 
 }
